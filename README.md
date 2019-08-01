@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 PyImageStream - Python WebSocket Image Stream
 =============================================
 
@@ -205,3 +206,6 @@ Author
 
 Hermann Czedik-Eysenberg  
 dev@hermann.czedik.net
+=======
+# PyControl
+>>>>>>> 2d51776c89ad9a50f5f8b457e97e2755f24491cf
