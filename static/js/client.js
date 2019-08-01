@@ -1,3 +1,4 @@
+//var forwardButton = document.getElementById("forwardButton");
 var img = document.getElementById("liveImg");
 var fpsText = document.getElementById("fps");
 
@@ -30,10 +31,12 @@ function requestImage() {
 }
 
 ws.onopen = function() {
-    console.log("connection was established");
+    console.log("cccccconnection was established");
     start_time = performance.now();
     requestImage();
 };
+
+
 
 ws.onmessage = function(evt) {
     var arrayBuffer = evt.data;
@@ -46,6 +49,7 @@ ws.onmessage = function(evt) {
     time = (time * time_smoothing) + (current_time * (1.0 - time_smoothing));
     start_time = end_time;
     var fps = Math.round(1000 / time);
+    
     fpsText.textContent = fps;
 
     var current_request_time = performance.now() - request_start_time;
@@ -55,3 +59,4 @@ ws.onmessage = function(evt) {
 
     setTimeout(requestImage, timeout);
 };
+

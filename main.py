@@ -15,7 +15,7 @@ import pygame.image
 
 parser = argparse.ArgumentParser(description='Start the PyImageStream server.')
 
-parser.add_argument('--port', default=8888, type=int, help='Web server port (default: 8888)')
+parser.add_argument('--port', default=8080, type=int, help='Web server port (default: 8888)')
 parser.add_argument('--camera', default=0, type=int, help='Camera index, first camera is 0 (default: 0)')
 parser.add_argument('--width', default=640, type=int, help='Width (default: 640)')
 parser.add_argument('--height', default=480, type=int, help='Height (default: 480)')
@@ -89,8 +89,11 @@ class ImageWebSocket(tornado.websocket.WebSocketHandler):
         camera.request_start()
 
     def on_message(self, message):
-        jpeg_bytes = camera.get_jpeg_image_bytes()
-        self.write_message(jpeg_bytes, binary=True)
+        if message=="more":
+            jpeg_bytes = camera.get_jpeg_image_bytes()
+            self.write_message(jpeg_bytes, binary=True)
+        elif message=="forward":
+            print("forward")
 
     def on_close(self):
         ImageWebSocket.clients.remove(self)
