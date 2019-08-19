@@ -12,6 +12,7 @@ from PIL import Image
 
 import pygame.camera
 import pygame.image
+from engine import engine
 
 parser = argparse.ArgumentParser(description='Start the PyImageStream server.')
 
@@ -26,6 +27,7 @@ args = parser.parse_args()
 
 class Camera:
 
+    
     def __init__(self, index, width, height, quality, stopdelay):
         print("Initializing camera...")
         pygame.camera.init()
@@ -36,7 +38,9 @@ class Camera:
         self.stop_requested = False
         self.quality = quality
         self.stopdelay = stopdelay
-
+        
+        
+        
     def request_start(self):
         if self.stop_requested:
             print("Camera continues to be in use")
@@ -66,6 +70,7 @@ class Camera:
 
     def get_jpeg_image_bytes(self):
         img = self._cam.get_image()
+        img=pygame.transform.rotate(img,180)
         imgstr = pygame.image.tostring(img, "RGB", False)
         pimg = Image.frombytes("RGB", img.get_size(), imgstr)
         with io.BytesIO() as bytesIO:
@@ -74,7 +79,7 @@ class Camera:
 
 
 camera = Camera(args.camera, args.width, args.height, args.quality, args.stopdelay)
-
+engines = engine.Engine()
 
 class ImageWebSocket(tornado.websocket.WebSocketHandler):
     clients = set()
@@ -92,8 +97,9 @@ class ImageWebSocket(tornado.websocket.WebSocketHandler):
         if message=="more":
             jpeg_bytes = camera.get_jpeg_image_bytes()
             self.write_message(jpeg_bytes, binary=True)
-        elif message=="forward":
-            print("forward")
+        else:
+            engines.move(message)
+            print(message)
 
     def on_close(self):
         ImageWebSocket.clients.remove(self)

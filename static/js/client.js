@@ -31,7 +31,7 @@ function requestImage() {
 }
 
 ws.onopen = function() {
-    console.log("cccccconnection was established");
+    console.log("connection was established");
     start_time = performance.now();
     requestImage();
 };
