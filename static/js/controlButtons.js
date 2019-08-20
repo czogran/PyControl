@@ -2,24 +2,44 @@
 var testText=document.getElementById("test1");
 
 
-document.getElementById("forwardButton").addEventListener("mousedown", forwardButtonClicked);
-document.getElementById("backwardButton").addEventListener("mousedown", backwardButtonClicked);
-document.getElementById("rightButton").addEventListener("mousedown", rightButtonClicked);
-document.getElementById("leftButton").addEventListener("mousedown", leftButtonClicked);
-
-document.getElementById("forwardButton").addEventListener("mouseup", forwardButtonReleased);
-document.getElementById("backwardButton").addEventListener("mouseup", backwardButtonReleased);
-document.getElementById("rightButton").addEventListener("mouseup", rightButtonReleased);
-document.getElementById("leftButton").addEventListener("mouseup", leftButtonReleased);
 
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
 {
-	testText.textContent=navigator.userAgent;
+	
+	window.oncontextmenu = function(event) 
+	{
+		event.preventDefault();
+		event.stopPropagation();
+		return false;
+	};
+	
+	document.getElementById("forwardButton").addEventListener("touchstart", forwardButtonClicked);
+	document.getElementById("backwardButton").addEventListener("touchstart", backwardButtonClicked);
+	document.getElementById("rightButton").addEventListener("touchstart", rightButtonClicked);
+	document.getElementById("leftButton").addEventListener("touchstart", leftButtonClicked);
+	
+	
+	
+	document.getElementById("forwardButton").addEventListener("touchend", forwardButtonReleased);
+	document.getElementById("backwardButton").addEventListener("touchend", backwardButtonReleased);
+	document.getElementById("rightButton").addEventListener("touchend", rightButtonReleased);
+	document.getElementById("leftButton").addEventListener("touchend", leftButtonReleased);
+	testText.textContent=navigator.userAgent+"    test3";
 }
 else
 {
 	
 	
+	document.getElementById("forwardButton").addEventListener("mousedown", forwardButtonClicked);
+	document.getElementById("backwardButton").addEventListener("mousedown", backwardButtonClicked);
+	document.getElementById("rightButton").addEventListener("mousedown", rightButtonClicked);
+	document.getElementById("leftButton").addEventListener("mousedown", leftButtonClicked);
+	
+	document.getElementById("forwardButton").addEventListener("mouseup", forwardButtonReleased);
+	document.getElementById("backwardButton").addEventListener("mouseup", backwardButtonReleased);
+	document.getElementById("rightButton").addEventListener("mouseup", rightButtonReleased);
+	document.getElementById("leftButton").addEventListener("mouseup", leftButtonReleased);
+
 	console.log(navigator.platform);
 	testText.textContent="inny";
 }
@@ -28,8 +48,8 @@ else
 
 function forwardButtonClicked()
 {
-	test1.textContent="forward";
-        console.log("onclcicked");
+	test1.textContent="Forward";
+        console.log("Onclcicked");
         ws.send("w");
 }
 
@@ -58,7 +78,7 @@ function leftButtonClicked()
 
 function forwardButtonReleased()
 {
-	test1.textContent="forrel";
+	test1.textContent="Forrel";
         console.log("mouseup");
         ws.send("p");
 }

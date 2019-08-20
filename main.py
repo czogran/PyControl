@@ -12,7 +12,7 @@ from PIL import Image
 
 import pygame.camera
 import pygame.image
-from engine import engine
+from engine import engines_chassis
 
 parser = argparse.ArgumentParser(description='Start the PyImageStream server.')
 
@@ -79,7 +79,7 @@ class Camera:
 
 
 camera = Camera(args.camera, args.width, args.height, args.quality, args.stopdelay)
-engines = engine.Engine()
+engines = engines_chassis.EnginesChassis()
 
 class ImageWebSocket(tornado.websocket.WebSocketHandler):
     clients = set()
@@ -99,7 +99,7 @@ class ImageWebSocket(tornado.websocket.WebSocketHandler):
             self.write_message(jpeg_bytes, binary=True)
         else:
             engines.move(message)
-            print(message)
+            #print(message)
 
     def on_close(self):
         ImageWebSocket.clients.remove(self)
