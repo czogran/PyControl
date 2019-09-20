@@ -13,11 +13,10 @@ class EnginesChassis :
     engine2_pwm_output = 17
     
     #default value of pwm
-    pwm_value_straight=90
-    pwm_value_turn=60
+    pwm_value=50
     
-    engine1=engine.Engine(engine1_output1,engine1_output2,engine1_pwm_output ,pwm_value_straight)
-    engine2=engine.Engine(engine2_input1 ,engine2_output2,engine2_pwm_output ,pwm_value_straight)
+    engine1=engine.Engine(engine1_output1,engine1_output2,engine1_pwm_output ,pwm_value)
+    engine2=engine.Engine(engine2_input1 ,engine2_output2,engine2_pwm_output ,pwm_value)
     
     #engine1=engine.Engine()
     #engine2=engine.Engine()
@@ -25,35 +24,29 @@ class EnginesChassis :
         
         
         if x== 'p':
+            print("Stop")
             self.engine1.stop()
             self.engine2.stop() 
-            print("Stop")
-
             
         elif x== 'w':
-            self.engine1.pwm_value.ChangeDutyCycle(self.pwm_value_straight)
+            print("Forward")
             self.engine1.forward()
             self.engine2.forward() 
-            print("Forward")
-
             
         elif x== 's' :
-            self.engine1.pwm_value.ChangeDutyCycle(self.pwm_value_straight)
+            print("Forward")
             self.engine1.backward()
             self.engine2.backward() 
-            print("Backward")
             
         elif x== 'a':
-            self.engine1.pwm_value.ChangeDutyCycle(self.pwm_value_turn)
+            print("Left")
             self.engine1.forward()
             self.engine2.backward() 
-            print("Left")
             
         elif x== 'd' :
-            self.engine1.pwm_value.ChangeDutyCycle(self.pwm_value_turn)
+            print("Right")
             self.engine1.backward()
             self.engine2.forward() 
-            print("Right")
             
         elif x== 'e':
             self.engine1.end()
